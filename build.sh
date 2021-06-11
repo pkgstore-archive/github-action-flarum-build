@@ -1,10 +1,9 @@
 #!/bin/bash
 
-SOURCE="${1}"
-TARGET="${2}"
-USERNAME="${3}"
-EMAIL="${4}"
-TOKEN="${5}"
+REPO="${1}"
+USER="${2}"
+EMAIL="${3}"
+TOKEN="${4}"
 
 composer=$( command -v composer )
 mkdir=$( command -v mkdir )
@@ -14,11 +13,12 @@ git=$( command -v git )
 date=$( command -v date )
 
 ${git} config --global user.email "${EMAIL}"
-${git} config --global user.name "${USERNAME}"
+${git} config --global user.name "${USER}"
 
-${git} clone https://"${USERNAME}":"${TOKEN}"@"${SOURCE#https://}" '/root/git/source' \
-  && cd '/root/git/source' || exit
-${git} remote add 'target' https://"${USERNAME}":"${TOKEN}"@"${TARGET#https://}"
+REPO_AUTH="https://${USER}:${TOKEN}@${REPO#https://}"
+
+${git} clone "${REPO_AUTH}" '/root/git/source' && cd '/root/git/source' || exit 1
+${git} remote add 'build' "${REPO_AUTH}"
 
 _timestamp() {
   timestamp=$( ${date} -u '+%Y-%m-%d %T' )
@@ -50,6 +50,6 @@ flarum_eng && flarum_rus
 
 ${git} add .                                      \
   && ${git} commit -a -m "Build: $( _timestamp )" \
-  && ${git} push 'target'
+  && ${git} push 'build'
 
 exit 0

@@ -5,14 +5,11 @@ branding:
   icon: ""
   color: ""
 inputs:
-  source:
-    description: "Source"
+  repo:
+    description: "Repository"
     required: true
-  target:
-    description: "Target"
-    required: true
-  username:
-    description: "Username"
+  user:
+    description: "User"
     required: true
   email:
     description: "E-mail"
@@ -24,8 +21,7 @@ runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    - ${{ inputs.source }}
-    - ${{ inputs.target }}
-    - ${{ inputs.username }}
+    - ${{ inputs.repo }}
+    - ${{ inputs.user }}
     - ${{ inputs.email }}
     - ${{ inputs.token }}
