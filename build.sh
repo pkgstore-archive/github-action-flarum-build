@@ -21,8 +21,7 @@ ${git} clone "${REPO_AUTH}" '/root/git/source' && cd '/root/git/source' || exit 
 ${git} remote add 'build' "${REPO_AUTH}"
 
 _timestamp() {
-  timestamp=$( ${date} -u '+%Y-%m-%d %T' )
-  echo "${timestamp}"
+  ${date} -u '+%Y-%m-%d %T'
 }
 
 flarum_eng() {
@@ -48,8 +47,10 @@ flarum_rus() {
 
 flarum_eng && flarum_rus
 
-${git} add .                                      \
-  && ${git} commit -a -m "Build: $( _timestamp )" \
+ts=$( _timestamp )
+
+${git} add .                            \
+  && ${git} commit -a -m "Build: ${ts}" \
   && ${git} push 'build'
 
 exit 0
