@@ -37,12 +37,12 @@ flarum_eng() {
 flarum_rus() {
   name="flarum.rus"
 
-  ${mkdir} -p "${name}"                                           \
-    && ${composer} create-project flarum/flarum "${name}"         \
-    && cd "${name}"                                               \
-    && ${composer} require 'marketplace/flarum-l10n-core-russian' \
-    && cd ..                                                      \
-    && ${tar} -cJf "${name}.tar.xz" "${name}"                     \
+  ${mkdir} -p "${name}"                                   \
+    && ${composer} create-project flarum/flarum "${name}" \
+    && cd "${name}"                                       \
+    && ${composer} require 'flarum-lang/russian'          \
+    && cd ..                                              \
+    && ${tar} -cJf "${name}.tar.xz" "${name}"             \
     && ${rm} -rf "${name}"
 }
 
