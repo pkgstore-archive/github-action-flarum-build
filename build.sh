@@ -17,7 +17,7 @@ ${git} config --global user.name "${USER}"
 
 REPO_AUTH="https://${USER}:${TOKEN}@${REPO#https://}"
 
-${git} clone "${REPO_AUTH}" '/root/git/source' && cd '/root/git/source' || exit 1
+${git} clone "${REPO_AUTH}" '/root/git/build' && cd '/root/git/build' || exit 1
 ${git} remote add 'build' "${REPO_AUTH}"
 
 _timestamp() {
