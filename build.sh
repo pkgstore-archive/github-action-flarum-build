@@ -5,12 +5,12 @@ USER="${2}"
 EMAIL="${3}"
 TOKEN="${4}"
 
-composer=$( command -v composer )
-mkdir=$( command -v mkdir )
-rm=$( command -v rm )
-tar=$( command -v tar )
-git=$( command -v git )
-date=$( command -v date )
+composer="$( command -v composer )"
+mkdir="$( command -v mkdir )"
+rm="$( command -v rm )"
+tar="$( command -v tar )"
+git="$( command -v git )"
+date="$( command -v date )"
 
 ${git} config --global user.email "${EMAIL}"
 ${git} config --global user.name "${USER}"
