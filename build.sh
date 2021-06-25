@@ -38,9 +38,9 @@ flarum_rus() {
 
   ${mkdir} -p "${name}"                                   \
     && ${composer} create-project flarum/flarum "${name}" \
-    && cd "${name}"                                       \
+    && pushd "${name}"                                    \
     && ${composer} require 'flarum-lang/russian'          \
-    && cd ..                                              \
+    && popd                                               \
     && ${tar} -cJf "${name}.tar.xz" "${name}"             \
     && ${rm} -rf "${name}"
 }
