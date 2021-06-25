@@ -27,29 +27,29 @@ _timestamp() {
 flarum_eng() {
   name="flarum.eng"
 
-  ${mkdir} -p "${name}"                                   \
+  ${mkdir} -p "${name}" \
     && ${composer} create-project flarum/flarum "${name}" \
-    && ${tar} -cJf "${name}.tar.xz" "${name}"             \
+    && ${tar} -cJf "${name}.tar.xz" "${name}" \
     && ${rm} -rf "${name}"
 }
 
 flarum_rus() {
   name="flarum.rus"
 
-  ${mkdir} -p "${name}"                                   \
+  ${mkdir} -p "${name}" \
     && ${composer} create-project flarum/flarum "${name}" \
-    && pushd "${name}"                                    \
-    && ${composer} require 'flarum-lang/russian'          \
-    && popd                                               \
-    && ${tar} -cJf "${name}.tar.xz" "${name}"             \
+    && pushd "${name}" \
+    && ${composer} require 'flarum-lang/russian' \
+    && popd \
+    && ${tar} -cJf "${name}.tar.xz" "${name}" \
     && ${rm} -rf "${name}"
 }
 
 flarum_eng && flarum_rus
 
-ts=$( _timestamp )
+ts="$( _timestamp )"
 
-${git} add .                            \
+${git} add . \
   && ${git} commit -a -m "Build: ${ts}" \
   && ${git} push 'build'
 
