@@ -51,7 +51,7 @@ flarum_eng && flarum_rus
 ts="$( _timestamp )"
 
 ${git} add . \
-  && ${git} commit -a -m "Build: ${ts}" \
+  && ${git} commit -a -m "BUILD: ${ts}" \
   && ${git} push 'build'
 
 exit 0
