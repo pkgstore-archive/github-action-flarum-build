@@ -14,6 +14,7 @@ date="$( command -v date )"
 
 ${git} config --global user.email "${EMAIL}"
 ${git} config --global user.name "${USER}"
+${git} config --global init.defaultBranch 'main'
 
 REPO_AUTH="https://${USER}:${TOKEN}@${REPO#https://}"
 
