@@ -1,31 +1,53 @@
 #!/bin/bash
+init() {
+  # Vars.
+  REPO="${1}"
+  USER="${2}"
+  EMAIL="${3}"
+  TOKEN="${4}"
+  
+  # Apps.
+  composer="$( command -v composer )"
+  mkdir="$( command -v mkdir )"
+  rm="$( command -v rm )"
+  tar="$( command -v tar )"
+  git="$( command -v git )"
+  date="$( command -v date )"
 
-REPO="${1}"
-USER="${2}"
-EMAIL="${3}"
-TOKEN="${4}"
+  # Git config.
+  ${git} config --global user.email "${EMAIL}"
+  ${git} config --global user.name "${USER}"
+  ${git} config --global init.defaultBranch 'main'
 
-composer="$( command -v composer )"
-mkdir="$( command -v mkdir )"
-rm="$( command -v rm )"
-tar="$( command -v tar )"
-git="$( command -v git )"
-date="$( command -v date )"
+  # Run.
+  git_clone && build_eng && build_rus && git_push
+}
 
-${git} config --global user.email "${EMAIL}"
-${git} config --global user.name "${USER}"
-${git} config --global init.defaultBranch 'main'
+# PUSHD command.
+pushd() {
+  command pushd "$@" > /dev/null || exit 1
+}
 
-REPO_AUTH="https://${USER}:${TOKEN}@${REPO#https://}"
+# POPD command.
+popd() {
+  command popd > /dev/null || exit 1
+}
 
-${git} clone "${REPO_AUTH}" '/root/git/build' && cd '/root/git/build' || exit 1
-${git} remote add 'build' "${REPO_AUTH}"
-
-_timestamp() {
+# Timestamp.
+timestamp() {
   ${date} -u '+%Y-%m-%d %T'
 }
 
-flarum_eng() {
+# Clone repository.
+git_clone() {
+  REPO_AUTH="https://${USER}:${TOKEN}@${REPO#https://}"
+
+  ${git} clone "${REPO_AUTH}" '/root/git/build' && cd '/root/git/build' || exit 1
+  ${git} remote add 'build' "${REPO_AUTH}"
+}
+
+# Build Flarum ENG.
+build_eng() {
   name="flarum.eng"
 
   ${mkdir} -p "${name}" \
@@ -34,7 +56,8 @@ flarum_eng() {
     && ${rm} -rf "${name}"
 }
 
-flarum_rus() {
+# Build Flarum RUS.
+build_rus() {
   name="flarum.rus"
 
   ${mkdir} -p "${name}" \
@@ -46,12 +69,14 @@ flarum_rus() {
     && ${rm} -rf "${name}"
 }
 
-flarum_eng && flarum_rus
+# Push Flarum builds to storage.
+git_push() {
+  ts="$( timestamp )"
 
-ts="$( _timestamp )"
+  ${git} add . \
+    && ${git} commit -a -m "BUILD: ${ts}" \
+    && ${git} push 'build'
+}
 
-${git} add . \
-  && ${git} commit -a -m "BUILD: ${ts}" \
-  && ${git} push 'build'
-
+init "$@"
 exit 0
