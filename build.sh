@@ -5,7 +5,7 @@ init() {
   USER="${2}"
   EMAIL="${3}"
   TOKEN="${4}"
-  
+
   # Apps.
   composer="$( command -v composer )"
   mkdir="$( command -v mkdir )"
@@ -24,17 +24,17 @@ init() {
 }
 
 # PUSHD command.
-pushd() {
+_pushd() {
   command pushd "$@" > /dev/null || exit 1
 }
 
 # POPD command.
-popd() {
+_popd() {
   command popd > /dev/null || exit 1
 }
 
 # Timestamp.
-timestamp() {
+_timestamp() {
   ${date} -u '+%Y-%m-%d %T'
 }
 
@@ -62,16 +62,16 @@ build_rus() {
 
   ${mkdir} -p "${name}" \
     && ${composer} create-project flarum/flarum "${name}" \
-    && pushd "${name}" \
+    && _pushd "${name}" \
     && ${composer} require 'flarum-lang/russian' \
-    && popd \
+    && _popd \
     && ${tar} -cJf "${name}.tar.xz" "${name}" \
     && ${rm} -rf "${name}"
 }
 
 # Push Flarum builds to storage.
 git_push() {
-  ts="$( timestamp )"
+  ts="$( _timestamp )"
 
   ${git} add . \
     && ${git} commit -a -m "BUILD: ${ts}" \
