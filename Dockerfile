@@ -1,6 +1,6 @@
 FROM alpine
 
-LABEL "name"="GitHub Flarum Build"
+LABEL "name"="Flarum Build"
 LABEL "description"=""
 LABEL "maintainer"="Kitsune Solar <kitsune.solar@gmail.com>"
 LABEL "repository"="https://github.com/pkgstore/github-action-flarum-build.git"
