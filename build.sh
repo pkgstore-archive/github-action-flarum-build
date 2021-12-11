@@ -38,7 +38,8 @@ init() {
 git_clone() {
   REPO_AUTH="https://${USER}:${TOKEN}@${REPO#https://}"
 
-  ${git} clone "${REPO_AUTH}" '/root/git/build' && cd '/root/git/build' || exit 1
+  ${git} clone "${REPO_AUTH}" '/root/git/build' \
+    && cd '/root/git/build' || exit 1
   ${git} remote add 'build' "${REPO_AUTH}"
 }
 
