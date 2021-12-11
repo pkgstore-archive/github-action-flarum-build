@@ -48,7 +48,7 @@ git_clone() {
 # -------------------------------------------------------------------------------------------------------------------- #
 
 build_eng() {
-  name="flarum.eng"
+  local name="flarum.eng"
 
   ${mkdir} -p "${name}"                                                           \
     && ${composer} --ignore-platform-reqs create-project flarum/flarum "${name}"  \
@@ -61,7 +61,7 @@ build_eng() {
 # -------------------------------------------------------------------------------------------------------------------- #
 
 build_rus() {
-  name="flarum.rus"
+  local name="flarum.rus"
 
   ${mkdir} -p "${name}"                                                           \
     && ${composer} --ignore-platform-reqs create-project flarum/flarum "${name}"  \
