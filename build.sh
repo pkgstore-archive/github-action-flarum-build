@@ -49,9 +49,9 @@ git_clone() {
 build_eng() {
   name="flarum.eng"
 
-  ${mkdir} -p "${name}" \
-    && ${composer} --ignore-platform-reqs create-project flarum/flarum "${name}" \
-    && ${tar} -cJf "${name}.tar.xz" "${name}" \
+  ${mkdir} -p "${name}"                                                           \
+    && ${composer} --ignore-platform-reqs create-project flarum/flarum "${name}"  \
+    && ${tar} -cJf "${name}.tar.xz" "${name}"                                     \
     && ${rm} -rf "${name}"
 }
 
@@ -62,12 +62,12 @@ build_eng() {
 build_rus() {
   name="flarum.rus"
 
-  ${mkdir} -p "${name}" \
-    && ${composer} --ignore-platform-reqs create-project flarum/flarum "${name}" \
-    && _pushd "${name}" \
-    && ${composer} --ignore-platform-reqs require 'flarum-lang/russian' \
-    && _popd \
-    && ${tar} -cJf "${name}.tar.xz" "${name}" \
+  ${mkdir} -p "${name}"                                                           \
+    && ${composer} --ignore-platform-reqs create-project flarum/flarum "${name}"  \
+    && _pushd "${name}"                                                           \
+    && ${composer} --ignore-platform-reqs require 'flarum-lang/russian'           \
+    && _popd                                                                      \
+    && ${tar} -cJf "${name}.tar.xz" "${name}"                                     \
     && ${rm} -rf "${name}"
 }
 
@@ -78,7 +78,7 @@ build_rus() {
 git_push() {
   ts="$( _timestamp )"
 
-  ${git} add . \
+  ${git} add .                            \
     && ${git} commit -a -m "BUILD: ${ts}" \
     && ${git} push 'build'
 }
