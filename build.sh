@@ -50,7 +50,7 @@ build_eng() {
   name="flarum.eng"
 
   ${mkdir} -p "${name}" \
-    && ${composer} create-project flarum/flarum "${name}" \
+    && ${composer} --ignore-platform-reqs create-project flarum/flarum "${name}" \
     && ${tar} -cJf "${name}.tar.xz" "${name}" \
     && ${rm} -rf "${name}"
 }
@@ -63,9 +63,9 @@ build_rus() {
   name="flarum.rus"
 
   ${mkdir} -p "${name}" \
-    && ${composer} create-project flarum/flarum "${name}" \
+    && ${composer} --ignore-platform-reqs create-project flarum/flarum "${name}" \
     && _pushd "${name}" \
-    && ${composer} require 'flarum-lang/russian' \
+    && ${composer} --ignore-platform-reqs require 'flarum-lang/russian' \
     && _popd \
     && ${tar} -cJf "${name}.tar.xz" "${name}" \
     && ${rm} -rf "${name}"
